@@ -1,0 +1,159 @@
+/* header.css - Header: logo, navigation, language switch and theme button (+ header breakpoints). */
+
+header {
+  position: sticky;
+  top: env(safe-area-inset-top,0px);
+  z-index: 10;
+  padding: 1rem 0;
+  background: linear-gradient(var(--bg) 70%,transparent);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  font-weight: 600;
+  font-size: 1.25rem;
+  min-height: 44px;
+}
+
+.logo i {
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  background: radial-gradient(circle,#fff 0 12%,#5cc49b 40%,transparent 70%);
+  box-shadow: 0 0 18px #5cc49b;
+}
+
+nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .25rem;
+  list-style: none;
+  margin: 0;
+  padding: .375rem;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+}
+
+nav a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 1rem;
+  border-radius: 11px;
+  font-size: .9rem;
+  color: var(--mute);
+  transition: .2s;
+}
+
+nav a:hover,nav a[aria-current] {
+  background: var(--navon);
+  color: var(--ink);
+}
+
+nav a[aria-current]::before {
+  content: "";
+  width: .45rem;
+  height: .45rem;
+  margin-right: .5rem;
+  border-radius: 50%;
+  background: var(--or);
+}
+
+.tools {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  flex-wrap: wrap;
+}
+
+.lang {
+  position: relative;
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 44px;
+  padding: 3px;
+  border: 1px solid var(--bd);
+  border-radius: 14px;
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+}
+
+.lang::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  width: calc(50% - 3px);
+  border-radius: 11px;
+  background: linear-gradient(180deg,#86d9b8,#46ad85);
+  transition: transform .3s cubic-bezier(.4,.1,.2,1);
+}
+
+:root[data-lang="en"] .lang::before {
+  transform: translateX(100%);
+}
+
+.lang button {
+  position: relative;
+  z-index: 1;
+  min-width: 2.9rem;
+  border: 0;
+  border-radius: 11px;
+  background: none;
+  color: var(--ink);
+  font-family: inherit;
+  font-weight: 600;
+  font-size: .85rem;
+  letter-spacing: .04em;
+  cursor: pointer;
+  transition: color .2s;
+}
+
+.lang button[aria-pressed="true"] {
+  color: #06140e;
+}
+
+.nav nav a {
+  padding: 0 .7rem;
+  font-size: .875rem;
+}
+
+.nav .tools .btn {
+  padding: .7rem 1.1rem;
+}
+
+.nav .tools {
+  gap: .6rem;
+}
+
+@media (min-width:1241px) {
+  .nav,.tools {
+    flex-wrap: nowrap;
+  }
+}
+
+@media (max-width:1240px) {
+  header {
+    position: static;
+  }
+  .nav nav {
+    order: 3;
+    width: 100%;
+  }
+  .nav nav ul {
+    justify-content: center;
+  }
+}

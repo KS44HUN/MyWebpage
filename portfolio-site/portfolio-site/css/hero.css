@@ -1,0 +1,81 @@
+/* hero.css - Hero: headline, pill and intro text. */
+
+.hero {
+  position: relative;
+  min-height: min(56rem,100svh);
+  padding: 3.5rem 0 0;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: auto -10% -30% -10%;
+  height: 80%;
+  background: radial-gradient(ellipse at 30% 100%,var(--g1),transparent 60%),radial-gradient(ellipse at 70% 110%,var(--g2),transparent 60%);
+  pointer-events: none;
+}
+
+.grid {
+  position: relative;
+  display: grid;
+  /* Mindkét oszlop szélessége független a tartalomtól: a főcím (pl. gépelés közben) soha nem
+     tolhatja el a névjegykártyát a pánttal együtt. A 900 px alatti egyoszlopos elrendezést a
+     responsive.css adja. */
+  grid-template-columns: minmax(0,1fr) clamp(17rem,28vw,21rem);
+  gap: 3rem;
+  align-items: start;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .55rem 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--pill);
+  font-size: .9rem;
+  color: var(--mute);
+}
+
+.pill b {
+  color: var(--ok);
+  font-weight: 500;
+}
+
+h1 {
+  font-weight: 500;
+  font-size: clamp(1.9rem,6.4vw,5.25rem);
+  line-height: 1.04;
+  letter-spacing: -.035em;
+  margin: 1.75rem 0 0;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+  background: linear-gradient(180deg,var(--h1a) 30%,var(--h1b));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+h1 span {
+  display: block;
+}
+
+h1 span:nth-child(2) {
+  padding-left: 1.4em;
+}
+
+@media (forced-colors:active) {
+  h1 {
+    color: CanvasText;
+    background: none;
+  }
+}
+
+.side p {
+  color: var(--mute);
+  font-size: 1.1rem;
+  font-weight: 300;
+  margin: 1.75rem 0;
+}

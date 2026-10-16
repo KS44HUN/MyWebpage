@@ -1,0 +1,75 @@
+/* responsive.css - Global breakpoints (<=900px, <=560px) and reduced-motion. */
+
+@media (max-width:900px) {
+  header {
+    position: static;
+  }
+  nav {
+    order: 3;
+    width: 100%;
+  }
+  nav ul {
+    justify-content: center;
+  }
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 2.25rem;
+  }
+  .g3 {
+    grid-template-columns: 1fr 1fr;
+  }
+  h1 span:nth-child(2) {
+    padding-left: .6em;
+  }
+  .coins {
+    height: 16rem;
+  }
+  .c2 {
+    left: 28%;
+    width: 10.6rem;
+    height: 10.6rem;
+  }
+  .c3 {
+    left: 66%;
+    width: 5.6rem;
+    height: 5.6rem;
+  }
+  .panel {
+    grid-template-columns: 1fr;
+    padding: 4.75rem 1.25rem 1.5rem;
+  }
+  .mid {
+    display: none;
+  }
+  .mini .tile {
+    flex-basis: 4.5rem;
+  }
+  section {
+    padding: 4rem 0;
+  }
+}
+
+@media (max-width:560px) {
+  .wrap {
+    padding: 0 1.1rem;
+  }
+  .g3 {
+    grid-template-columns: 1fr;
+  }
+  .tools {
+    width: 100%;
+  }
+  .tools .btn {
+    flex: 1;
+  }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  *,*::before,*::after {
+    animation: none!important;
+    transition: none!important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}

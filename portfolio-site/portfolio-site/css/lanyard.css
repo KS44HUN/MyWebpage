@@ -1,0 +1,327 @@
+/* lanyard.css - Lanyard + ID badge: strap, metal hardware, card layers and card content. */
+
+.lanyard {
+  position: relative;
+  display: flow-root;
+  margin-bottom: 1.5rem;
+  perspective: 1000px;
+}
+
+.strap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 140px;
+  overflow: visible;
+  -webkit-mask-image: linear-gradient(transparent,#000 30%);
+  mask-image: linear-gradient(transparent,#000 30%);
+}
+
+.strap path {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+}
+
+.strap .eg {
+  stroke: rgba(0,0,0,.22);
+  stroke-width: 63;
+}
+
+.strap .rb {
+  stroke: var(--strap);
+  stroke-width: 60;
+}
+
+.strap text {
+  display: none;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  fill: rgba(6,20,14,.72);
+}
+
+.strap.on text {
+  display: block;
+}
+
+.hang {
+  position: relative;
+  display: flow-root;
+  width: min(100%,18.5rem);
+  margin: 128px auto 0;
+  transform: translate(var(--x,0),var(--y,0)) rotate(var(--r,0deg)) rotateY(var(--ry,0deg));
+  transform-origin: calc(50% + 7.0px) 12px;
+  will-change: transform;
+}
+
+.hw,.hw2,.hw3 {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 76px;
+  height: 203px;
+  margin-left: -29.6px;
+  background: var(--lan) 0 0/100% 100% no-repeat;
+  pointer-events: none;
+}
+
+.hw {
+  z-index: 0;
+  filter: drop-shadow(0 4px 5px rgba(0,0,0,.35));
+}
+
+.hw2 {
+  z-index: 3;
+  filter: drop-shadow(0 4px 4px rgba(0,0,0,.45));
+  clip-path: polygon(30px 172px,120px 172px,120px 186px,30px 186px);
+}
+
+.hw3 {
+  z-index: 2;
+  filter: brightness(.5);
+  clip-path: inset(186px 27.2px 5px 10.4px round 6px);
+}
+
+.lanyard {
+  --lan: url("../assets/img/lanyard.png");
+}
+
+.cj {
+  position: relative;
+  z-index: 1;
+  margin-top: 172px;
+  transform-origin: 50% 20px;
+  transform: rotate(var(--d,0deg));
+}
+
+.badge {
+  position: relative;
+  overflow: hidden;
+  padding: 0 1.25rem 1.2rem;
+  border-radius: 24px;
+  background: var(--badge);
+  border: 1px solid var(--line);
+  box-shadow: 0 26px 50px rgba(0,0,0,.3);
+}
+
+.badge::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 5.6rem;
+  background: linear-gradient(115deg,#86d9b8,#5fd0c4 35%,#c4eea0 60%,#86d9b8);
+  background-size: 220% 100%;
+  background-position: calc(50% + var(--s,0)*1%) 0;
+}
+
+.badge::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(115deg,transparent calc(38% + var(--s,0)*1%),rgba(255,255,255,.2) calc(50% + var(--s,0)*1%),transparent calc(62% + var(--s,0)*1%));
+}
+
+.slot {
+  position: absolute;
+  left: 50%;
+  top: 14px;
+  width: 2.4rem;
+  height: 12px;
+  border-radius: 99px;
+  background: var(--bg);
+  transform: translateX(-50%);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,.65),0 1px 0 rgba(255,255,255,.18);
+}
+
+.bh {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  gap: .5rem;
+  padding-top: 1.9rem;
+  color: #06140e;
+  font-size: .82rem;
+  font-weight: 500;
+}
+
+.id {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  gap: .9rem;
+  margin-top: .8rem;
+}
+
+.ph {
+  flex: 0 0 5rem;
+  height: 5rem;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  font-size: 1.7rem;
+  font-weight: 600;
+  color: #06140e;
+  background: linear-gradient(160deg,#b4e8d2,#4fb58f);
+  border: 3px solid var(--badge);
+}
+
+.who {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: .4rem;
+}
+
+.id strong {
+  display: inline-block;
+  max-width: 100%;
+  padding: .4rem 1.1rem;
+  border-radius: 999px;
+  background: #fff;
+  color: #06140e;
+  border: 1px solid rgba(6,20,14,.15);
+  box-shadow: 0 4px 14px rgba(0,0,0,.2);
+  font-weight: 500;
+  font-size: 1.15rem;
+  line-height: 1.2;
+  letter-spacing: -.01em;
+  overflow-wrap: anywhere;
+}
+
+.id span {
+  display: block;
+  color: var(--mute);
+  font-size: .9rem;
+  line-height: 1.3;
+}
+
+.acc {
+  list-style: none;
+  margin: 1.1rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: .5rem;
+  font-size: .85rem;
+}
+
+.acc li {
+  display: grid;
+  grid-template-columns: 5.6rem auto 1fr;
+  align-items: center;
+  gap: .6rem;
+}
+
+.acc .pips i {
+  border-color: var(--at);
+}
+
+.acc .pips i.on {
+  background: var(--at);
+}
+
+.acc em {
+  font-style: normal;
+  color: var(--mute);
+  text-align: right;
+}
+
+.term {
+  margin-top: 1rem;
+  padding: .7rem .8rem;
+  border-radius: 12px;
+  background: #08170f;
+  color: #cfeadc;
+  font: .78rem/1.55 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  overflow-wrap: anywhere;
+}
+
+.term .pr {
+  color: #8fdcbc;
+}
+
+.term .out {
+  color: #a6bfb4;
+}
+
+.bs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  margin-top: 1rem;
+}
+
+.bs b {
+  display: block;
+  font-weight: 400;
+  font-size: 1.8rem;
+  letter-spacing: -.03em;
+  line-height: 1.1;
+  color: var(--at);
+}
+
+.bs span {
+  color: var(--mute);
+  font-size: .85rem;
+}
+
+.av {
+  display: flex;
+}
+
+.av i {
+  display: grid;
+  place-items: center;
+  width: 2.3rem;
+  height: 2.3rem;
+  margin-left: -.5rem;
+  border-radius: 50%;
+  border: 2px solid var(--badge);
+  font-size: .72rem;
+  font-weight: 600;
+  font-style: normal;
+  color: #06140e;
+  background: linear-gradient(135deg,#86d9b8,#4fb58f);
+}
+
+.av i:first-child {
+  margin-left: 0;
+}
+
+.av i:nth-child(2) {
+  background: linear-gradient(135deg,#9fe0c8,#4cb8a6);
+}
+
+.av i:nth-child(3) {
+  background: linear-gradient(135deg,#d8f3e8,#8fdcbc);
+}
+
+.ft {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  margin-top: 1rem;
+}
+
+.bc {
+  flex: 1;
+  height: 1.8rem;
+  border-radius: 4px;
+  opacity: .55;
+  background: repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 5px,var(--ink) 5px 6px,transparent 6px 10px,var(--ink) 10px 13px,transparent 13px 15px);
+}
+
+.ft code {
+  font: .72rem ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  color: var(--mute);
+}
+
+@media (min-width:901px) {
+  .side {
+    margin-top: -3.5rem;
+  }
+}

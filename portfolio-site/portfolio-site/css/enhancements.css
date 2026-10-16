@@ -1,0 +1,174 @@
+/* ==========================================================
+   enhancements.css – az alap CSS fájlok UTÁN töltődik be
+   ========================================================== */
+
+/* 1) „Élő” (live) zöld pötty a „Munkalehetőségre nyitott” jelvényben */
+.pill b{
+  position:relative;
+  display:inline-block;
+  color:#22c55e;
+  text-shadow:0 0 6px rgba(34,197,94,.55);
+  animation:ks-live 1.4s ease-in-out infinite;
+}
+.pill b::after{
+  content:"●";
+  position:absolute;left:0;top:0;
+  color:#22c55e;
+  pointer-events:none;
+  animation:ks-ping 1.4s cubic-bezier(0,0,.2,1) infinite;
+}
+@keyframes ks-live{0%,100%{opacity:1}50%{opacity:.25}}
+@keyframes ks-ping{0%{transform:scale(1);opacity:.7}75%,100%{transform:scale(2.6);opacity:0}}
+
+/* 2) Írógép-effekt a főcímen (h1) */
+html.ks-tw .hero h1{visibility:hidden;animation:ks-show 0s 3s forwards} /* biztonsági visszaesés, ha a JS nem fut */
+html.ks-tw .hero h1.ks-ready{visibility:visible;animation:none}
+@keyframes ks-show{to{visibility:visible}}
+.ks-caret{
+  display:inline-block;
+  width:.06em;height:.88em;
+  margin-left:.06em;
+  /* fix szín: a színátmenetes (átlátszó betűszínű) utolsó soron a currentColor láthatatlan lenne */
+  background:var(--ink,#fff);
+  border-radius:1px;
+  vertical-align:-.06em;
+}
+/* gépelés után: finoman elhalványuló, visszatérő kurzor */
+.ks-caret.idle{animation:ks-soft 1.3s ease-in-out infinite}
+@keyframes ks-soft{0%,100%{opacity:1}50%{opacity:.12}}
+
+/* 3) Görgetésre mozgó címsorok */
+.ks-drift{will-change:transform}
+/* a `main`-re tesszük, nem a html-re: a html overflow-ja kikapcsolná a sticky menüt */
+main{overflow-x:clip}
+
+/* 4) Névjegykártya: fotó a „NI” helyén (assets/img/profil.jpg) – teljesen kitölti a keretet */
+.badge .ph{position:relative;overflow:hidden}
+.badge .ph img{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  object-fit:cover;
+  object-position:var(--ks-photo-pos,50% 30%);   /* ha a fej levágódik: változtasd az 2. értéket (0% = a kép teteje) */
+  border-radius:0;                               /* a sarkokat a .ph overflow:hidden vágja a keret belső ívével */
+  transform:scale(1.05);                         /* kis túlnyúlás: nem marad vékony perem/rés a széleken */
+  display:block;
+}
+
+/* 5) Menü és jobb oldali gombok: fix helyen maradnak nyelvváltáskor és görgetéskor
+      (a szélességet a JS állítja be, itt csak a belső elrendezés van) */
+/* a „Kezdőlap” elemnél nincs pötty */
+.nav nav ul a[href="#main"]::before{display:none}
+
+@media (min-width:900px){
+  /* a `display`-t nem írjuk át: a header.css saját flex elrendezése érintetlen marad */
+  .nav nav ul a{
+    position:relative;
+    box-sizing:border-box;
+    text-align:center;
+    justify-content:center;
+    transition-property:background-color,color;      /* a szélesség ne animálódjon */
+  }
+  /* az aktív elem pöttye a szöveg bal széle előtt, mindig ugyanakkora (.5rem) távolságra áll;
+     a szöveg szélességét (--ks-tw) a JS méri meg, a pötty nem foglal helyet, a szöveg nem mozdul */
+  .nav nav ul a[aria-current]::before{
+    position:absolute;
+    top:50%;
+    left:calc(50% - var(--ks-tw,3rem) / 2 - .95rem);  /* .45rem pötty + .5rem távolság */
+    margin:-.225rem 0 0;
+  }
+  .nav nav ul a[href="#main"]::before{display:none}
+  .nav .tools .btn{box-sizing:border-box;text-align:center;justify-content:center}
+}
+
+/* 6) Főcím: egységesen balra zárt sorok, szó közben nem tördel
+      (a betűméretet a JS illeszti az oszlop szélességéhez, hogy a leghosszabb szó is elférjen) */
+.hero h1,
+.hero h1 > span:nth-child(n){
+  text-align:left;
+  text-indent:0;
+  overflow-wrap:normal;
+  word-break:normal;
+  hyphens:manual;
+}
+.hero h1{display:flow-root}               /* a lebegő elemet is magába foglalja */
+.hero h1 > span:nth-child(n){
+  display:block;
+  margin-left:0;
+  padding-left:0;
+  translate:none;
+}
+/* a középső „a” ne álljon külön sorban: a következő szó elé kerül, ugyanabba a sorba */
+.hero h1 > span:nth-child(2){
+  float:left;
+  margin-right:.28em;
+}
+
+/* 7) Hero bal oszlop: bemutatkozó szöveg, gombok és technológia-sor a főcím alatt */
+.ks-hero-copy .ks-lead{
+  max-width:34rem;
+  margin:1.75rem 0 0;
+  color:var(--mute);
+  font-size:clamp(1rem,1.05vw,1.15rem);
+  line-height:1.6;
+}
+.ks-hero-copy .cta{margin-top:1.75rem}
+.ks-stack{
+  display:flex;flex-wrap:wrap;gap:.5rem;
+  list-style:none;
+  margin:1.75rem 0 0;padding:0;
+}
+.ks-stack li{
+  padding:.4rem .85rem;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:var(--glass);
+  color:var(--mute);
+  font-size:.8rem;
+  line-height:1.2;
+}
+
+/* 8) Menü: görgetéskor követ, de elrejtőzik, ha az egér nincs a közelében */
+header{transition:transform .35s cubic-bezier(.4,.1,.2,1),opacity .25s}
+header.ks-hide{transform:translateY(-120%);opacity:0;pointer-events:none}
+
+/* 9) Kapcsolat: logós gombok (a feliratot az aria-label/title adja, nincs látható szöveg) */
+#kapcsolat .links .btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:4.25rem;
+  padding-left:1.1rem;padding-right:1.1rem;
+}
+#kapcsolat .links .btn .ico{width:1.5rem;height:1.5rem;flex:none;display:block}
+
+/* 10) Névjegykártya: a név sorrendje a nyelvtől függ (HU: Simon Krisztián, EN: Krisztián Simon) */
+:root:not([data-lang="en"]) .badge .nm-en,
+:root[data-lang="en"] .badge .nm-hu{display:none}
+
+/* 11) Névjegykártya: a név erős kontrasztú és vastagabb – világos és sötét módban is
+       (fix fehér név-címke, majdnem fekete szöveg; a fénycsík-réteg fölé kerül, hogy ne halványítsa) */
+.badge .who strong{
+  position:relative;z-index:2;
+  background:#fff;
+  color:#06140e;
+  font-weight:600;
+  opacity:1;
+  filter:none;
+}
+.badge .who strong .nm-hu,
+.badge .who strong .nm-en{color:inherit;font-weight:inherit;opacity:1}
+
+/* 12) Hero rács: mindkét oszlop szélessége független a tartalomtól.
+       Eddig a bal oszlop szélessége a főcímben épp látható leghosszabb szóhoz igazodott, ezért
+       gépelés közben folyamatosan változott, és a jobb oldali oszlopot (a névjegykártyát a pánttal)
+       eltolta. Így a kártya helye gépelés előtt, közben és után ugyanaz.
+       (A 900 px alatti egyoszlopos elrendezést a responsive.css adja, ahhoz nem nyúlunk.) */
+@media (min-width:901px){
+  .hero .grid{grid-template-columns:minmax(0,1fr) clamp(17rem,28vw,21rem)}
+  .hero .grid > *{min-width:0}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .pill b,.pill b::after,.ks-caret.idle{animation:none}
+  .pill b::after{display:none}
+  .ks-drift{will-change:auto}
+  header{transition:none}
+}

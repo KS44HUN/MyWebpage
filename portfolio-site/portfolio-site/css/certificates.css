@@ -1,0 +1,97 @@
+/* certificates.css - Certifications list (+ about/certs breakpoint). */
+
+.certs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.certs li {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.1rem 1.4rem;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--glass);
+}
+
+.dt {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 14px;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  background: var(--navon);
+  line-height: 1.15;
+}
+
+.dt b {
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+.dt span {
+  font-size: .75rem;
+  color: var(--mute);
+}
+
+.ct h3 {
+  margin: 0;
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+.ct p {
+  margin: .15rem 0 0;
+  color: var(--mute);
+  font-size: .9rem;
+}
+
+.status {
+  padding: .3rem .8rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  font-size: .85rem;
+  white-space: nowrap;
+}
+
+.status.ok {
+  color: var(--ok);
+}
+
+.ver {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--at);
+  font-size: .9rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width:900px) {
+  .bento {
+    grid-template-columns: 1fr 1fr;
+  }
+  .big,.att {
+    grid-column: 1/-1;
+  }
+  .big {
+    grid-row: auto;
+  }
+  .cols {
+    grid-template-columns: 1fr;
+  }
+  .certs li {
+    grid-template-columns: auto 1fr;
+  }
+  .certs .status,.certs .ver {
+    grid-column: 2;
+    justify-self: start;
+  }
+}

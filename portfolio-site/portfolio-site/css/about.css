@@ -1,0 +1,147 @@
+/* about.css - About section: bento grid and the learning board. */
+
+.bento {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 1.1rem;
+}
+
+.bx {
+  position: relative;
+  overflow: hidden;
+  padding: 1.75rem;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: var(--glass);
+}
+
+.bx h3 {
+  margin: 0 0 .6rem;
+  font-weight: 500;
+  font-size: 1.35rem;
+  line-height: 1.25;
+}
+
+.bx p {
+  margin: 0;
+  color: var(--mute);
+}
+
+.big {
+  grid-column: span 2;
+  grid-row: span 2;
+  background: linear-gradient(160deg,var(--p1),var(--p2));
+}
+
+.big h3 {
+  font-size: clamp(1.5rem,2.6vw,2.1rem);
+  letter-spacing: -.02em;
+}
+
+.big p+p {
+  margin-top: 1rem;
+}
+
+.st b {
+  display: block;
+  font-weight: 400;
+  font-size: 3rem;
+  letter-spacing: -.03em;
+  line-height: 1.1;
+  color: var(--at);
+}
+
+.st span {
+  color: var(--mute);
+  font-size: .9rem;
+}
+
+.att {
+  grid-column: span 2;
+}
+
+.board {
+  grid-column: 1/-1;
+}
+
+.cols {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+.col h4 {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  margin: 0 0 .75rem;
+  font-weight: 500;
+  font-size: .95rem;
+}
+
+.col h4 .n {
+  padding: .05rem .55rem;
+  border-radius: 999px;
+  background: var(--navon);
+  font-size: .8rem;
+}
+
+.col ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: .75rem;
+}
+
+.kc {
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--mini);
+}
+
+.kc .tg {
+  display: inline-block;
+  padding: .1rem .6rem;
+  border-radius: 8px;
+  background: var(--navon);
+  color: var(--at);
+  font-size: .78rem;
+  font-weight: 500;
+}
+
+.kc strong {
+  display: block;
+  margin: .5rem 0 .25rem;
+  font-weight: 500;
+}
+
+.pr {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  font-size: .8rem;
+  color: var(--mute);
+}
+
+.bar {
+  flex: 1;
+  height: .45rem;
+  border-radius: 99px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.bar i {
+  display: block;
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg,#5cc49b,#4cb8a6);
+}
+
+.dn {
+  font-size: .8rem;
+  color: var(--ok);
+}
