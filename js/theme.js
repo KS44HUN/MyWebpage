@@ -16,7 +16,8 @@
   function apply() {
     const theme = current();
     root.dataset.theme = theme;
-    button.textContent = P.i18n.t(theme === 'dark' ? 'Világos mód' : 'Sötét mód');
+    button.textContent = theme === 'dark' ? '☀️' : '🌙';
+    button.setAttribute('title', P.i18n.t(theme === 'dark' ? 'Váltás világos módra' : 'Váltás sötét módra'));
     button.setAttribute('aria-label', P.i18n.t(theme === 'dark' ? 'Váltás világos módra' : 'Váltás sötét módra'));
   }
 

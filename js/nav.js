@@ -47,6 +47,7 @@
       idleTimer = setTimeout(release, 150);             // 150 ms mozgás nélkül → vége a görgetésnek
       return;
     }
+    if (window.scrollY <= 4) { setActive(home); return; }
     const line = window.innerHeight * 0.45;            // a képernyő felső 45%-ánál húzott vonal
     let active = home;
     let bestTop = -Infinity;
@@ -68,7 +69,16 @@
   }
 
   links.forEach((link) => {
-    link.addEventListener('click', () => {
+    link.addEventListener('click', (event) => {
+      if (link.getAttribute('href') === '#main') {
+        event.preventDefault();
+        locked = home;
+        setActive(home);
+        window.scrollTo({ top: 0, left: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+        clearTimeout(idleTimer);
+        idleTimer = setTimeout(release, 650);
+        return;
+      }
       const t = targets.find((x) => x.link === link);
       if (!t) return;
       locked = t;

@@ -49,7 +49,7 @@
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
       acceptNode(n) {
         const p = n.parentElement;
-        const ok = p && !/^(SCRIPT|STYLE)$/.test(p.tagName) && !p.closest('#tgl,[role=status]') && n.nodeValue.trim();
+        const ok = p && !/^(SCRIPT|STYLE|NOSCRIPT|SVG)$/.test(p.tagName) && !p.closest('#tgl,[role=status]') && n.nodeValue.trim();
         return ok ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
       }
     });
@@ -59,9 +59,9 @@
       const original = originals.get(node);
       node.nodeValue = lang === 'en' ? t(original) : original;
     }
-    document.querySelectorAll('[aria-label],[title]').forEach((el) => {
+    document.querySelectorAll('[aria-label],[title],[placeholder],[alt],[aria-description]').forEach((el) => {
       if (el.id === 'tgl') return; // the theme button is translated by theme.js
-      ['aria-label', 'title'].forEach((attr) => {
+      ['aria-label', 'title', 'placeholder', 'alt', 'aria-description'].forEach((attr) => {
         const value = el.getAttribute(attr);
         if (value == null) return;
         const store = '_o' + attr;

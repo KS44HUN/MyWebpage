@@ -1,0 +1,43 @@
+/* Finishing touches: stable theme control and narrow-screen safeguards. */
+#tgl { display:inline-flex; align-items:center; justify-content:center; flex:0 0 44px; width:44px; min-width:44px; height:44px; padding:0; line-height:1; font-size:1.25rem; white-space:nowrap; }
+html { overflow-wrap:break-word; }
+img, video, svg { max-width:100%; }
+@media (max-width:600px) {
+  .wrap { max-width:100%; }
+  .tools { min-width:0; gap:.5rem; }
+  .nav, .nav .tools { min-width:0; }
+  h1, h2, h3, p, a { overflow-wrap:break-word; }
+  .links { flex-wrap:wrap; }
+}
+@media (prefers-reduced-motion:reduce) {
+  *, *::before, *::after { scroll-behavior:auto !important; animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
+}
+@media (forced-colors:active) { #tgl, .lang button { border:1px solid ButtonText; } }
+
+/* Keep the footer in normal document flow, directly after the contact section.
+   Avoid a viewport-height floor that can create a large blank area at low zoom. */
+html { height:auto; min-height:0; }
+body { min-height:0; height:auto; }
+#kapcsolat { min-height:0; height:auto; padding-bottom:clamp(2.5rem,5vw,5rem); }
+footer { position:static; margin-top:0; }
+
+/* Compact glass pill matching the portfolio's emerald palette. */
+#back-to-top {
+  position:fixed; right:max(1.25rem, env(safe-area-inset-right));
+  bottom:max(1.25rem, env(safe-area-inset-bottom)); z-index:1000;
+  display:inline-flex; align-items:center; justify-content:center; gap:0;
+  width:46px; min-width:46px; height:46px; padding:0;
+  border:1px solid var(--bd); border-radius:999px;
+  background:var(--bg); color:var(--ink);
+  box-shadow:0 8px 24px rgba(0,0,0,.17), inset 0 1px rgba(255,255,255,.08);
+  font:700 .72rem/1 inherit; font-family:inherit; letter-spacing:.13em;
+  cursor:pointer; transition:background-color .2s, border-color .2s, box-shadow .2s;
+}
+#back-to-top[hidden] { display:none !important; }
+#back-to-top:hover { background:var(--pill); border-color:var(--at); box-shadow:0 8px 26px rgba(0,0,0,.24); }
+#back-to-top__icon, .back-to-top__icon { display:inline-flex; align-items:center; justify-content:center; color:var(--at); }
+#back-to-top .back-to-top__icon svg { display:block; }
+#back-to-top:focus-visible { outline:3px solid var(--focus); outline-offset:3px; }
+@media (max-width:600px) { #back-to-top { right:max(12px, env(safe-area-inset-right)); bottom:max(12px, env(safe-area-inset-bottom)); } }
+@media (prefers-reduced-motion:reduce) { #back-to-top { transition:none; } }
+@media (forced-colors:active) { #back-to-top { border:2px solid ButtonText; } }
