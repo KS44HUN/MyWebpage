@@ -10,7 +10,7 @@
     button.title = label;
   };
   button.addEventListener('click', () => {
-    window.scrollTo({top: 0, left: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'});
+    window.scrollTo({top: 0, left: 0, behavior: 'instant'});
   });
   window.addEventListener('scroll', update, {passive: true});
   window.addEventListener('langchange', updateLanguage);

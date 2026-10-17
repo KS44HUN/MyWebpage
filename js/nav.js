@@ -74,7 +74,7 @@
         event.preventDefault();
         locked = home;
         setActive(home);
-        window.scrollTo({ top: 0, left: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
         clearTimeout(idleTimer);
         idleTimer = setTimeout(release, 650);
         return;

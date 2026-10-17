@@ -13,6 +13,8 @@
   const originals = new WeakMap(); // text node -> original Hungarian text
   let lang = detectLanguage();
   let announcer = null;
+  let observer = null;
+  let translateQueued = false;
 
   function detectLanguage() {
     try {
@@ -45,11 +47,11 @@
     return s;
   }
 
-  function translatePage() {
+  function translatePage(updateHero = false) {
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
       acceptNode(n) {
         const p = n.parentElement;
-        const ok = p && !/^(SCRIPT|STYLE|NOSCRIPT|SVG)$/.test(p.tagName) && !p.closest('#tgl,[role=status]') && n.nodeValue.trim();
+        const ok = p && !/^(SCRIPT|STYLE|NOSCRIPT|SVG)$/.test(p.tagName) && !p.closest('#tgl,[role=status],.hero h1') && n.nodeValue.trim();
         return ok ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
       }
     });
@@ -69,6 +71,12 @@
         el.setAttribute(attr, lang === 'en' ? t(el[store]) : el[store]);
       });
     });
+    // The animated heading is managed as complete phrases, never as typed fragments.
+    const heroParts = document.querySelectorAll('.hero h1 > span');
+    const huParts = ['A szerverszobától', 'a', 'végfelhasználói élményig.'];
+    if (updateHero) heroParts.forEach((part, index) => {
+      if (index < huParts.length) part.textContent = lang === 'en' ? (DICT[huParts[index]] || huParts[index]) : huParts[index];
+    });
     document.title = lang === 'en' ? t(originalTitle) : originalTitle;
   }
 
@@ -78,7 +86,9 @@
     root.lang = next;
     root.dataset.lang = next;
     document.querySelectorAll('.lang button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.l === next)));
-    translatePage();
+    if (observer) observer.disconnect();
+    translatePage(true);
+    if (observer) observer.observe(document.body, {childList:true, subtree:true, characterData:true});
     document.dispatchEvent(new CustomEvent('langchange', { detail: { lang: next } }));
     if (byUser) {
       try { localStorage.setItem('lang', next); } catch (e) {}
@@ -95,6 +105,27 @@
     document.body.appendChild(announcer);
     document.querySelectorAll('.lang button').forEach((b) => b.addEventListener('click', () => setLang(b.dataset.l, true)));
     setLang(lang, false);
+    // Dynamic content can replace text nodes after the initial translation.
+    observer = new MutationObserver((mutations) => {
+      // The hero typewriter updates its text every few milliseconds.
+      // Those intermediate fragments are not translation source strings;
+      // translating them would interrupt and restart the visual effect.
+      const onlyHeroTyping = mutations.every((mutation) => {
+        const element = mutation.target.nodeType === Node.ELEMENT_NODE
+          ? mutation.target : mutation.target.parentElement;
+        return element && element.closest('.hero h1');
+      });
+      if (onlyHeroTyping) return;
+      if (translateQueued) return;
+      translateQueued = true;
+      requestAnimationFrame(() => {
+        translateQueued = false;
+        observer.disconnect();
+        translatePage();
+        observer.observe(document.body, {childList:true, subtree:true, characterData:true});
+      });
+    });
+    observer.observe(document.body, {childList:true, subtree:true, characterData:true});
   }
 
   P.i18n = { t, setLang, init, get lang() { return lang; } };

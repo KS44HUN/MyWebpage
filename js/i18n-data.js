@@ -113,6 +113,9 @@ Portfolio.translations = {
     "A napi munkámhoz és tanuláshoz használt eszközök.": "Everyday tools I use for work and continuous learning.",
 
     // Projects
+    "Saját fejlesztés, amely létrehozásához az nyelvigára való felkészülésem inspirálta. Magyar-Angol; Angol-Magyar szógykorló a hatékonyabb tanulás érdekében": "A personal project inspired by my language exam preparation. A Hungarian–English and English–Hungarian vocabulary practice app for more effective learning.",
+    "Automatizáló szkriptek": "Automation Scripts",
+    "Teendőkezelő webapp bejelentkezéssel és adatbázissal.": "A task management web app with authentication and database integration.",
     "Kiemelt projektjeim": "Featured Projects",
     "A rendszergazdai órai, valamint vizsgamunkáim mellett és egyéb tanulási projektek mellett saját ötleteimet is megvalósítom. Ezek egyúttal referenciamunkaként is szolgálnak.": "Beyond my coursework and exam assignments, I bring my own ideas to life through independent projects, which also serve as live portfolio references.",
     "Saját fejlesztői projekt, amelynek létrehozását a nyelvvizsgára való felkészülésem inspirálta. Magyar-Angol; Angol-Magyar szógyakorló a hatékonyabb tanulás érdekében": "A custom vocabulary practice application inspired by my language exam preparation. Features Hungarian-English and English-Hungarian exercises for efficient learning.",

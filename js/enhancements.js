@@ -7,6 +7,7 @@
   /* ---------- 1) Írógép-effekt a főcímen ---------- */
   var h1 = document.querySelector('.hero h1');
   var tw = null; // futó animáció állapota
+  var languageChanged = false;
 
   function readHeroTexts() {
     var sp = [].slice.call(h1.children).filter(function (n) { return n.tagName === 'SPAN'; });
@@ -70,7 +71,7 @@
   }
 
   function typeHero() {
-    if (!h1) return;
+    if (!h1 || languageChanged) return;
     if (reduce) { glueDom(); fitHero(readHeroTexts()); h1.classList.add('ks-ready'); return; }
 
     glueDom();                       // előbb a végleges (összekötött) szöveggel mérünk, így a lefoglalt hely pontos
@@ -124,16 +125,26 @@
   }
 
   // nyelvváltás közben ne maradjon félbe a szöveg: előbb befejezzük, utána fut az i18n
-  document.addEventListener('click', function (e) {
-    if (tw && e.target.closest && e.target.closest('.lang')) finishTyping();
-  }, true);
+  document.addEventListener('langchange', function () {
+    languageChanged = true;
+    finishTyping();
+    // The translation module owns the complete heading after language changes.
+    if (h1) {
+      h1.querySelectorAll('.ks-caret').forEach(function (c) { c.remove(); });
+      h1.querySelectorAll('span').forEach(function (sp) { sp.removeAttribute('aria-hidden'); });
+      h1.removeAttribute('aria-label');
+      h1.classList.add('ks-ready');
+      h1.style.minHeight = '';
+      fitHero(readHeroTexts());
+    }
+  });
 
   var fontsReady = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
   fontsReady.then(typeHero, typeHero);
 
   // vissza/előre gombbal (gyorsítótárból) visszatérve is újra lefut az animáció
   window.addEventListener('pageshow', function (e) {
-    if (e.persisted && h1) { finishTyping(); typeHero(); }
+    if (e.persisted && h1) { finishTyping(); if (!languageChanged) typeHero(); }
   });
 
   /* ---------- 2) Görgetésre mozgó címsorok ---------- */
